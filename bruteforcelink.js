@@ -32,7 +32,7 @@ fetch(url)
 
         const body = await res.text();
         // ajustar filtro de parada, não me julguém, eu acho esse método mais eficiente na maioria dos casos
-        if (!body.includes('Unknow')) {
+        if (!body.includes('Unknown')) {
           console.log(`sucesso: %c${password}`, `color: green`);
           break;
         }
