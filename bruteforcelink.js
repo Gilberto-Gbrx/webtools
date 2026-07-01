@@ -11,7 +11,7 @@ fetch(url)
 
     // ajustar a url do alvo antes de enviar
     // to pensando em adaptar com input no console ou com prompt para a próxima versão
-    const loginUrl = 'https://ffaa83c05e99272efeef617499dc7c28.ctf.hacker101.com/login';
+    const loginUrl = 'https://alvo.com/login';
 
     (async () => {
       for (const password of passwords) {
